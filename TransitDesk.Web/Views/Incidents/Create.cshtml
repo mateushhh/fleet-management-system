@@ -1,0 +1,53 @@
+﻿@model TransitDesk.Web.ViewModels.IncidentReportViewModel
+
+@{
+    ViewData["Title"] = "Zgłoszenie Incydentu";
+}
+
+<div class="container mt-4">
+    <h2>Zgłoś Incydent Drogowy</h2>
+    <hr />
+
+    <!-- Formularz musi posiadać enctype dla uploadu plików -->
+    <form asp-action="Create" method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+        <div class="mb-3">
+            <label asp-for="VehicleSideNumber" class="form-label"></label>
+            <input asp-for="VehicleSideNumber" class="form-control" />
+            <span asp-validation-for="VehicleSideNumber" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="LineNumber" class="form-label"></label>
+            <input asp-for="LineNumber" class="form-control" />
+            <span asp-validation-for="LineNumber" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label"></label>
+            <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="OccurredAt" class="form-label"></label>
+            <input asp-for="OccurredAt" class="form-control" type="datetime-local" />
+            <span asp-validation-for="OccurredAt" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Załącznik (Zdjęcie lub PDF, max 5 MB)</label>
+            <input type="file" name="attachmentFile" class="form-control" />
+            <span class="text-danger">@Html.ValidationMessage("attachmentFile")</span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Wyślij zgłoszenie</button>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

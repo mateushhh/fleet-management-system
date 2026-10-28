@@ -1,0 +1,64 @@
+﻿@model TransitDesk.Web.ViewModels.VehicleViewModel
+
+@{
+    ViewData["Title"] = "Rejestracja Nowego Pojazdu";
+}
+
+<div class="container mt-4">
+    <h2>@ViewData["Title"]</h2>
+    <hr />
+
+    <form asp-controller="Vehicles" asp-action="Create" method="post">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+        <div class="mb-3">
+            <label asp-for="SideNumber" class="form-label"></label>
+            <input asp-for="SideNumber" class="form-control" />
+            <span asp-validation-for="SideNumber" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="ModelName" class="form-label"></label>
+            <input asp-for="ModelName" class="form-control" />
+            <span asp-validation-for="ModelName" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="DepotName" class="form-label"></label>
+            <input asp-for="DepotName" class="form-control" />
+            <span asp-validation-for="DepotName" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="ProductionYear" class="form-label"></label>
+            <input asp-for="ProductionYear" class="form-control" />
+            <span asp-validation-for="ProductionYear" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Capacity" class="form-label"></label>
+            <input asp-for="Capacity" class="form-control" />
+            <span asp-validation-for="Capacity" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3 form-check">
+            <input asp-for="IsLowFloor" class="form-check-input" />
+            <label asp-for="IsLowFloor" class="form-check-label"></label>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="ServiceStatus" class="form-label"></label>
+            <select asp-for="ServiceStatus" asp-items="Html.GetEnumSelectList<TransitDesk.Web.ViewModels.ServiceStatus>()" class="form-select"></select>
+            <span asp-validation-for="ServiceStatus" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Zapisz pojazd w rejestrze</button>
+        <a asp-action="Index" class="btn btn-secondary">Anuluj</a>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

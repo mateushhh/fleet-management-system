@@ -1,0 +1,58 @@
+﻿@model IEnumerable<TransitDesk.Web.ViewModels.VehicleViewModel>
+
+@{
+    ViewData["Title"] = "Monitorowane Pojazdy";
+}
+
+<div class="container mt-4">
+    <h2>Lista Monitorowanych Pojazdów (Sesja)</h2>
+    <hr />
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nr boczny</th>
+                <th>Model</th>
+                <th>Zajezdnia</th>
+                <th>Status</th>
+                <th>Akcje</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.SideNumber</td>
+                        <td>@item.ModelName</td>
+                        <td>@item.DepotName</td>
+                        <td>@item.ServiceStatus</td>
+                        <td>
+                            <form asp-action="RemoveFromWatchlist" method="post">
+                                <input type="hidden" name="sideNumber" value="@item.SideNumber" />
+                                <button type="submit" class="btn btn-sm btn-danger">Usuń</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="5" class="text-center">Brak pojazdów na liście monitorowanych.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <a asp-action="Index" class="btn btn-secondary">Powrót do pełnej ewidencji</a>
+</div>

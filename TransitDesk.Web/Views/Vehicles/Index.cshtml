@@ -1,0 +1,65 @@
+﻿@model IEnumerable<TransitDesk.Web.ViewModels.VehicleViewModel>
+
+@{
+    ViewData["Title"] = "Ewidencja Floty";
+}
+
+<div class="container mt-4">
+    <h2>Ewidencja Floty Pojazdów</h2>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <p>
+        <a asp-action="Create" class="btn btn-success">Dodaj nowy pojazd</a>
+    </p>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nr boczny</th>
+                <th>Model</th>
+                <th>Zajezdnia</th>
+                <th>Rok prod.</th>
+                <th>Pojemność</th>
+                <th>Niskopodłogowy</th>
+                <th>Status</th>
+                <th>Akcje</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.SideNumber</td>
+                        <td>@item.ModelName</td>
+                        <td>@item.DepotName</td>
+                        <td>@item.ProductionYear</td>
+                        <td>@item.Capacity</td>
+                        <td>@(item.IsLowFloor ? "Tak" : "Nie")</td>
+                        <td>@item.ServiceStatus</td>
+                        <td>
+                            <form asp-controller="Vehicles" asp-action="AddVehicleToWatchlist" method="post" class="d-inline">
+                                <input type="hidden" name="sideNumber" value="@item.SideNumber" />
+                                <button type="submit" class="btn btn-sm btn-outline-primary">Monitoruj</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="7" class="text-center">Brak zarejestrowanych pojazdów w bazie.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
