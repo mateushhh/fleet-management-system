@@ -1,4 +1,4 @@
-# TransitDesk - Public Transport Fleet & Incident Management System
+# Public Transport Fleet & Incident Management System
 
 An ASP.NET Core MVC web application designed for public transport dispatchers to manage vehicle fleets, track incidents, and monitor operations.
 
